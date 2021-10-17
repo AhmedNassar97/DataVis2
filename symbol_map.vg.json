@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "background":"#404040",
-  "width": 715,
-  "height": 300,
+  "width": 1515,
+  "height": 800,
   "title": "Global Deaths from Natural Disasters, 1900-2021 ",
   "projection": {"type": "equalEarth"},
   "params": [          {

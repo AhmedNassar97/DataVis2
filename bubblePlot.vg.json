@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title":"Correlation between Natural Disasters, 1900-2021",
   "background":"#404040",
-  "width": 390,
-  "height": 500,
+  "width": 590,
+  "height": 700,
   "data": {
     "url": "Natural_Disasters.csv"
   },

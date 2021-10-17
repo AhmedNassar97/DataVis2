@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Occurance of Natural Disasters Across the Globe, 1900-2021",
   "background":"#404040",
-  "width": 700,
-  "height": 300,
+  "width": 1500,
+  "height": 800,
   "data": {
     "url": "https://raw.githubusercontent.com/KaneSec/vega_lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
     "format": {
