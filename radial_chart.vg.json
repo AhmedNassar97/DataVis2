@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title":"Occurance of Natural Disasters Across Continents, 1900-2021",
   "background":"#404040",
-  "width": 1650,
-  "height": 800,
+  "width": 750,
+  "height": 300,
   "data": {
     "url": "SubsetA_ContinentDis.csv"
   },

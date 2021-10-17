@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Deaths by Common Natural Disasters",
   "background":"#404040",
-  "width": 721,
-  "height": 700,
+  "width": 321,
+  "height": 321,
   "data": { "url": "SubsetE_TypeDeaths.csv"
 },
 "transform": [
