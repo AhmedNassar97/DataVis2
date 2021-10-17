@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 590,
-  "height": 715,
+  "height": 718,
   "title": "Correlation Between CPI and Deaths, 1900-2021",
   "background":"#404040",
   "data": {
