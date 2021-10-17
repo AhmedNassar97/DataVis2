@@ -1,0 +1,87 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Deaths by Common Natural Disasters",
+  "background":"#404040",
+  "width": 721,
+  "height": 700,
+  "data": { "url": "SubsetE_TypeDeaths.csv"
+},
+"transform": [
+  {"filter": "datum['Total_Deaths'] > 0 && (datum['Disaster_Type'] == 'Drought'  || datum['Disaster_Type'] == 'Flood' || datum['Disaster_Type'] == 'Earthquake' || datum['Disaster_Type'] == 'Epidemic' || datum['Disaster_Type'] == 'Storm')"
+  }
+],
+  "encoding": {
+    "x": {"field": "Disaster_Type", "type": "nominal" , "axis": {"labelAngle": 0,"grid": false, "labelFontSize":20, "labelColor":"white","titleColor":"white", "titleFontSize": 30, "titleFontStyle":"bold"}, "title":"Disaster Type"},
+    "y": {"field": "Total_Deaths", "type": "quantitative", "axis":{"grid": false, "labelFontSize":20, "labelColor":"white", "titleColor":"white", "titleFontSize": 30, "titleFontStyle":"bold"},"title":"Total Deaths"},
+    "color": {"field": "Disaster_Type", "type": "nominal", "legend":null,
+    "scale": {
+      "domain":["Drought","Earthquake","Storm","Flood","Epidemic"],
+      "range":["#EDB458","#E84855","#A4FCF1","#18a3ff","21FA90"]
+  }}
+  },
+  "layer": [
+      {
+          "mark": {
+              "type": "bar",
+              "stroke":"white"
+            },
+  "params": [
+    {
+      "name": "highlight",
+      "select": {"type": "point", "on": "mouseover"}
+    },
+    {"name": "select", "select": "point"}
+    
+  ],    "encoding": {
+      "fillOpacity": {
+        "condition": {"param": "select", "value": 1},
+        "value": 0.3
+      },
+      "strokeWidth": {
+        "condition": [
+          {
+            "param": "select",
+            "empty": false,
+            "value": 4
+          },
+          {
+            "param": "highlight",
+            "empty": false,
+            "value": 3
+          }
+        ],
+        "value": 0
+      },
+      "tooltip": [
+        {"field": "Disaster_Type", "type": "nominal", "title":"Disaster Type"},
+        {"field": "Total_Deaths", "type": "quantitative", "title": "Total Deaths", "format":","}
+      ]
+    }
+      },
+      {
+        "mark":{"type": "text", "fill":"#F3EFF5","align":"center", "dy":-10, "fontStyle":"italic","fontWeight":"bold", "fontSize":20},
+        "encoding": {
+          "text":{"field":"Death_value", "type": "nominal"},
+          "fillOpacity": {
+              "condition": {"param": "select", "value": 1},
+              "value": 0.3
+            }
+        }
+          }
+    ],
+    "config": {
+      "legend": {
+        "labelFontSize": 20,
+        "titleFontSize": 20,
+        "labelColor":"white",
+        "titleColor":"white"
+      },
+      "title": {
+        "color":"white",
+        "fontSize": 30
+      },
+      "view": {
+        "stroke": "transparent"
+     }
+      }
+}

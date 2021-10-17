@@ -1,0 +1,130 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Occurance of Natural Disasters Across the Globe, 1900-2021",
+  "background":"#404040",
+  "width": 1500,
+  "height": 800,
+  "data": {
+    "url": "https://raw.githubusercontent.com/KaneSec/vega_lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+    "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+  },
+  "transform": [{
+      "lookup": "properties.NAME",
+      "from": {
+        "data": {
+          "url": "SubsetB_TotalDisasters.csv"
+        },
+        "key": "Country",
+        "fields": ["Disaster"]
+      }
+    },
+    {"calculate": "datum.Disaster", "as": "Natural Disasters"},
+    {"calculate": "datum.Country", "as": "Country"}
+  ],
+  "projection": {
+    "type": "equirectangular"
+  },
+  "layer":[{
+  "mark": {
+    "type": "geoshape",
+    "stroke":"brown",
+    "strokeWidth":1
+    },
+    "params": [
+      {
+        "name": "highlight",
+        "select": {"type": "point", "on": "mouseover", "clear":"mouseout"}
+      },
+      {"name": "select", "select": "point"}
+    ],
+  "encoding": {
+    "color": {
+      "field": "Natural Disasters",
+      "type": "quantitative",
+      "scale": {
+        "type": "log",
+        "scheme":"goldred"
+    }
+    },
+    "fillOpacity": {
+      "condition": {"param": "highlight", "value": 1},
+      "value": 0.7
+    },
+    "strokeWidth": {
+      "condition": [
+        {
+          "param": "select",
+          "empty": false,
+          "value": 4
+        },
+        {
+          "param": "highlight",
+          "empty": false,
+          "value": 3
+        }
+      ],
+      "value": 1
+    },
+    "stroke":{
+      "condition": [
+        {
+          "param": "select",
+          "empty": false,
+          "value": "red"
+        },
+        {
+          "param": "highlight",
+          "empty": false,
+          "value": "red"
+        }
+      ],
+      "value": "brown"
+
+    },
+    "tooltip": [
+      {"field": "properties.NAME", "type": "nominal", "title": "Country"},
+      {"field": "Disaster", "type": "quantitative", "title":"Disaster Count"}
+    ]}},
+    {
+      "data": {
+      "url": "SubsetC_Deaths.csv"
+    },
+      "mark":{
+        "type": "text",
+        "fill":"white",
+        "fontWeight":"bold",
+        "fontStyle":"italic",
+        "fontSize":25
+    },
+    "encoding": {
+      "longitude": {"field": "long", "type": "quantitative"},
+      "latitude": {"field": "lat", "type": "quantitative"},
+      "text":{"field":"Country", "type": "nominal"},
+      "opacity": {
+        "condition": {
+          "test": "datum['Country'] == 'China' || datum['Country'] == 'United States' || datum['Country'] == 'India'",
+          "value": 1
+        },
+        "value": 0
+      }}
+
+    }],  "config": {
+    "legend": {
+      "labelFontSize": 20,
+      "titleFontSize": 20,
+      "labelColor":"white",
+      "titleColor":"white"
+    },
+    "title": {
+      "color":"white",
+      "fontSize": 30
+    },
+    "view": {
+      "stroke": "transparent"
+   }
+    }
+  }
+

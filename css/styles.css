@@ -1,0 +1,93 @@
+#choropleth_map {
+	color: #404040;
+	border: 3px solid #7F7F7F;
+}
+
+#scatter_plot{
+	color: whitesmoke;
+	top:50px;
+	bottom: 100px; 
+	left: 100px;
+	right: 100px;
+}
+
+#radial_chart{
+	color: #40514F;
+	border: 3px solid #7F7F7F;
+}
+
+#bar_deaths{
+	color: #40514F;
+	border: 3px solid #7F7F7F;
+}
+
+#bar_finance{
+	color: #40514F;
+	border: 3px solid #7F7F7F;
+}
+
+#bubble_plot{
+	color: #40514F;
+	border: 3px solid #7F7F7F;
+}
+
+#scatter{
+	color: #40514F;
+	border: 3px solid #7F7F7F;
+}
+
+#symbol_map{
+	color: #40514F;
+	border: 3px solid #7F7F7F;
+}
+.chart_anno{
+	font-family: Verdana, Geneva, Tahoma, sans-serif; 
+	color: white; 
+	font-size: 30px; 
+	text-align: center;
+	font-style: italic;
+}
+
+.Header1{
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;font-size: 120px; color: #e25959; text-align:center; font-weight: bold
+}
+
+.Header2{
+	font-family: Verdana, Geneva, Tahoma, sans-serif ; font-size: 65px; color: #e25959; text-align:center; font-weight: bold;
+}
+
+.Body{
+	font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 30px; color: #F3EFF5; text-align:justify;
+	padding-right: 20%;
+	padding-left: 20%;
+	line-height: 150%;
+	text-justify: auto;
+}
+
+.List{
+	font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 30px; color: #F3EFF5; text-align:justify;
+	padding-left: 25%;
+	padding-right:25%;
+	line-height: 200%;
+
+}
+.Footer{
+	font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 15px; font-style: italic; color: rgb(218, 218, 218); text-align:right;
+	padding-right: 2%;
+
+}
+
+.Highlight{
+	color: #fa6a6a; 
+	font-weight: bold;
+}
+
+.LineBody{
+	border-color: #cccbcb;
+	width: 72%;
+}
+
+.customFilter{
+	background: rgb(85, 85, 85);
+	font-family: Verdana, Geneva, Tahoma, sans-serif ;
+}

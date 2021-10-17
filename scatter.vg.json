@@ -1,0 +1,184 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 590,
+  "height": 710,
+  "title": "Correlation Between CPI and Deaths, 1900-2021",
+  "background":"#404040",
+  "data": {
+    "url": "SubsetF_Years.csv"
+  },
+  "params": [{
+    "name": "Continent_selection",
+    "bind": {
+      "input": "select",
+      "options": [
+        null,
+        "Americas",
+        "Europe",
+        "Africa",
+        "Asia",
+        "Oceania"
+      ],
+      "labels":[
+        "Show All",
+        "Americas",
+        "Europe",
+        "Africa",
+        "Asia",
+        "Oceania"
+      ],
+      "name": "Select Continent: "
+    }
+  },
+  {
+    "name": "year_beg",
+    "value": 1900,
+    "bind": {
+      "input": "range",
+      "min": 1900,
+      "max": 2021,
+      "name": "Select Begining Year: "
+    }
+  },
+  {
+    "name": "year_end",
+    "value": 2021,
+    "bind": {
+      "input": "range",
+      "min": 1900,
+      "max": 2021,
+      "name": "Select Ending Year: "
+    }
+  }],
+  "transform": [
+    {"filter": "Continent_selection == null || datum.Continent == Continent_selection"},
+    {"filter":"year(datum.Year) < year_end"},
+    {"filter":"year(datum.Year) > year_beg"}
+  ],
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "timeUnit":"year",
+      "type": "temporal",
+      "title": "Year",
+      "axis":{"grid":false,"labelFontSize":20, "labelColor":"white","titleColor":"white", "titleFontSize": 30, "titleFontStyle":"bold"}
+    },
+    "y": {
+      "field": "Average_CPI",
+      "type": "quantitative",
+      "title": "Community Prepareness Index",
+      "axis":{"tickCount":10, "labelFontSize":20, "labelColor":"white","titleColor":"white", "titleFontSize": 30, "titleFontStyle":"bold"}
+    }
+  },
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "continent_highlight",
+          "select": {"type": "point", "fields": ["Continent"]},
+          "bind": "legend"
+          } ],
+          "mark": {
+            "type":"circle",
+            "opacity": 0.75,
+            "stroke": "white",
+            "strokeWidth": 0.5
+          },
+          "encoding": {
+            "color": {
+              "field": "Continent",
+              "type": "nominal",
+              "scale": {
+                "domain":["Africa","Americas","Asia","Europe","Oceania"],
+                "range":["#FF8427","#FE9DE9","#DB2955","#97CC04","0E9594"]
+            }},
+            "size":{
+                "field":"Total_Deaths",
+                "type": "quantitative",
+                "title": "Total Deaths",
+                "scale":{
+                  "type": "linear",
+                  "domain":[10,100,1000,10000,100000],
+                  "range":[50,100,200,400,800]
+                
+                },
+                "legend":{
+                  "symbolFillColor":"white",
+                  "symbolOpacity":0.8
+              }
+                  },
+              "opacity": {
+                "condition": {
+                  "param": "continent_highlight", "value": 0.6}, 
+                  "value": 0.1},
+              "tooltip": [
+                {"timeUnit":"year","field": "Year", "type": "temporal", "title": "Year"},
+                {"field": "Continent", "type": "nominal"},
+                {"field": "Average_CPI", "type": "quantitative", "format": ".2f", "title": "CPI"},
+                {"field": "Total_Deaths", "title": "Total Deaths", "type": "quantitative", "format": ","}
+                
+              ]
+
+          }
+    },
+      {
+        "mark": {"type": "rule", "strokeWidth":3, "color":"white"},
+        "encoding": {
+          "opacity": {
+            "condition": {"value": 0.8, "param": "hover", "empty": false},
+            "value": 0
+          },
+          "tooltip": [
+            {"timeUnit":"year","field": "Year", "type": "temporal", "title": "Year"},
+            {"field": "Continent", "type": "nominal"},
+            {"field": "Average_CPI", "type": "quantitative", "format": ".2f", "title": "CPI"},
+            {"field": "Total_Deaths", "title": "Total Deaths", "type": "quantitative", "format": ","}  
+          ]
+        },
+        "params": [{
+          "name": "hover",
+          "select": {
+            "type": "point",
+            "fields": ["Year"],
+            "on": "mouseover",
+            "clear": "mouseout"
+          }
+        }]
+      },{
+        "mark": {
+          "type": "text", 
+          "radiusOffset": 10, 
+          "fill":"#F3EFF5", 
+          "fontSize":20, 
+          "fontWeight":"bold",
+          "fontStyle":"italic",
+          "dx":-130,
+          "dy":-10
+        },
+        "encoding": {
+          "text": {
+            "field": "Note", 
+            "type": "nominal",
+            "condition":{"test":"datum['Average_CPI'] > 77.40 && datum['Continent'] == 'Asia'","value":["Highest CPI: 78", "Asia"]}
+          }
+          }
+        }   
+      ],
+
+  "config": {
+    "legend": {
+      "labelFontSize": 20,
+      "titleFontSize": 20,
+      "labelColor":"white",
+      "titleColor":"white",
+      "symbolSize":400
+    },
+    "title": {
+      "color":"white",
+      "fontSize": 30
+    },
+    "view": {
+      "stroke": "transparent"
+   }
+    }
+}

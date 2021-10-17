@@ -1,0 +1,174 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title":"Correlation between Natural Disasters, 1900-2021",
+  "background":"#404040",
+  "width": 590,
+  "height": 700,
+  "data": {
+    "url": "Natural_Disasters.csv"
+  },
+  "params": [
+    {
+    "name": "Type_Selection",
+    "bind": {
+      "input": "select",
+      "options": [
+        null,
+        "Drought",
+        "Earthquake",
+        "Epidemic",
+        "Flood",
+        "Storm"
+      ],
+      "labels":[
+        "Show All",
+        "Drought",
+        "Earthquake",
+        "Epidemic",
+        "Flood",
+        "Storm"
+      ],
+      "name": "Select Disaster Type: "
+    }
+  },
+    {
+      "name": "year_beg",
+      "value": 1900,
+      "bind": {
+        "input": "range",
+        "min": 1900,
+        "max": 2021,
+        "name": "Select Begining Year: "
+      }
+    },
+    {
+      "name": "year_end",
+      "value": 2021,
+      "bind": {
+        "input": "range",
+        "min": 1900,
+        "max": 2021,
+        "name": "Select Ending Year: "
+      }
+    }
+  ],
+  "transform": [
+      {"filter":"datum['Total_Deaths'] > 0 && (datum['Disaster_Type'] == 'Drought'  || datum['Disaster_Type'] == 'Flood' || datum['Disaster_Type'] == 'Earthquake' || datum['Disaster_Type'] == 'Epidemic' || datum['Disaster_Type'] == 'Storm')"
+      },
+      {"filter":"year(datum.Year) < year_end"},
+      {"filter":"year(datum.Year) > year_beg"},
+      {"filter": "Type_Selection == null || datum.Disaster_Type == Type_Selection"},
+      {"filter": "datum.Disaster_Type != null"}
+
+    ],
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "temporal",
+      "timeUnit":"year",
+      "axis": {"labelAngle":0,"grid": false, "labelColor":"white", "labelFontSize":20, "titleColor":"white", "titleFontSize": 50, "titleFontStyle":"bold", "title": "Years"}
+    },
+    "y": {"field": "Disaster_Type", "type": "nominal", "axis": {"grid":true,"labelColor":"white","labelFontSize":20,"titleColor":"white", "titleFontSize": 50, "labelPadding":10, "titleFontStyle":"bold", "title": ""}}
+  },
+  "layer": [{
+      "params": [{
+          "name": "dis_highlight",
+          "select": {"type": "point", "fields": ["Disaster_Type"]},
+          "bind": "legend"
+          }],
+          "mark": {
+              "type": "circle",
+              "opacity": 0.75,
+              "stroke": "white",
+              "strokeWidth": 0.5
+            },
+            "encoding": {
+              "size": {
+                  "field": "Total_Deaths",
+                  "type": "quantitative",
+                  "title": "Total Deaths",
+                  "legend":{
+                      "symbolFillColor":"white",
+                      "symbolOpacity":0.8
+                  },
+                  "scale": {"rangeMax": 5000}
+                },
+                "color": {"field": "Disaster_Type", "type": "nominal",    
+                "scale": {
+                  "domain":["Drought","Earthquake","Storm","Flood","Epidemic"],
+                  "range":["#EDB458","#E84855","#A4FCF1","#18a3ff","21FA90"]
+              }},
+                "opacity": {
+                  "condition": {
+                    "param": "dis_highlight", "value": 0.6}, 
+                    "value": 0.1},
+                "tooltip":[
+                  {"timeUnit":"year","field": "Year", "type": "quantitative", "title": "Year"},
+                  {"field": "Disaster_Type", "type": "nominal", "title":"Disater Type"},
+                  {"field": "Total_Deaths", "type": "quantitative", "title": "Total Deaths", "format":","}
+                ]
+            }
+
+  },
+      {
+          "mark": {"type": "rule", "strokeWidth":5, "color":"white"},
+          "encoding": {
+            "strokeOpacity": {
+              "condition": {"value": 1, "param": "hover", "empty": false},
+              "value": 0
+            },
+            "tooltip": [
+              {"timeUnit":"year","field": "Year", "type": "temporal", "title": "Year"},
+              {"field": "Disaster_Type", "type": "nominal", "title": "Disaster Type"},
+              {"field": "Total_Deaths", "title": "Total Deaths", "type": "quantitative", "format": ","}  
+            ]
+          },
+          "params": [{
+            "name": "hover",
+            "select": {
+              "type": "point",
+              "fields": ["Year"],
+              "on": "mouseover",
+              "clear": "mouseout"
+            }
+          }]
+        },
+        {
+          "mark": {
+            "type": "text", 
+            "radiusOffset": 10, 
+            "fill":"#F3EFF5", 
+            "fontSize":20, 
+            "fontWeight":"bold",
+            "fontStyle":"italic",
+            "dx":0,
+            "dy":-65
+          },
+          "encoding": {
+            "text": {
+              "field": "Note", 
+              "type": "nominal",
+              "condition":{"test":"datum['Disaster_Type'] == 'Flood' && datum['Total_Deaths'] > 3000000","value":["Most deaths in 1 year","3.7 million"]}
+            }
+            }
+          }  
+
+],
+  "config": {
+      "legend": {
+        "labelFontSize": 20,
+        "titleFontSize": 20,
+        "labelColor":"white",
+        "titleColor":"white",
+        "symbolSize":400,
+        "padding":10
+      },
+      "title": {
+        "color":"white",
+        "fontSize": 30
+      },
+      "view": {
+        "stroke": "transparent"
+     }
+      }
+}
