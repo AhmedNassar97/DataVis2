@@ -117,7 +117,7 @@
     },
     "title": {
       "color":"white",
-      "fontSize": 20
+      "fontSize": 10
     },
     "view": {
       "stroke": "transparent"
