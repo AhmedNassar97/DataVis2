@@ -80,6 +80,7 @@
         "size": {
           "field": "Total_Deaths",
           "type": "quantitative",
+          "title":"Total Deaths",
           "scale":{
             "domain":[10000,5000000],
             "range":[200,2000]

@@ -93,7 +93,7 @@
                   },
                   "scale": {"rangeMax": 5000}
                 },
-                "color": {"field": "Disaster_Type", "type": "nominal",    
+                "color": {"field": "Disaster_Type", "title": "Disaster Type", "type": "nominal",    
                 "scale": {
                   "domain":["Drought","Earthquake","Storm","Flood","Epidemic"],
                   "range":["#EDB458","#E84855","#A4FCF1","#18a3ff","21FA90"]
